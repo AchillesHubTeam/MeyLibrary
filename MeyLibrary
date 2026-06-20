@@ -1,34 +1,34 @@
 local Mey = {
-	Theme = {
-		Colors = {
-			BGTop = Color3.fromRGB(255, 233, 242),
-			BGBottom = Color3.fromRGB(255, 255, 255),
-			CloudWhite = Color3.fromRGB(255, 255, 255),
-			CloudPinkLight = Color3.fromRGB(255, 211, 232),
-			CloudPinkDeep = Color3.fromRGB(255, 184, 220),
-			PanelGlass = Color3.fromRGB(255, 255, 255),
-			PanelTint = Color3.fromRGB(255, 233, 242),
-			Gold = Color3.fromRGB(240, 201, 135),
-			Rose = Color3.fromRGB(214, 97, 143),
-			RoseDeep = Color3.fromRGB(184, 74, 120),
-			TextDark = Color3.fromRGB(92, 58, 78),
-			SliderTrack = Color3.fromRGB(248, 215, 232),
-			SliderFillA = Color3.fromRGB(255, 143, 191),
-			SliderFillB = Color3.fromRGB(255, 211, 232),
-			ToggleOn = Color3.fromRGB(255, 143, 191),
-			ToggleOff = Color3.fromRGB(232, 216, 224),
-			InputBorder = Color3.fromRGB(232, 175, 201),
-			DropdownBg = Color3.fromRGB(255, 245, 248),
-			DropdownHover = Color3.fromRGB(255, 225, 235),
-			KeybindBg = Color3.fromRGB(240, 230, 235),
-			ColorPickerBg = Color3.fromRGB(255, 240, 245),
-		},
-		Fonts = {
-			Title = FontFace.new("rbxasset://fonts/families/FredokaOne.ttf"),
-			Body = FontFace.new("rbxasset://fonts/families/Nunito.ttf"),
-			BodyBold = FontFace.new("rbxasset://fonts/families/Nunito.ttf", Enum.FontWeight.Bold),
-		},
-	},
+    Theme = {
+        Colors = {
+            BGTop = Color3.fromRGB(255, 233, 242),
+            BGBottom = Color3.fromRGB(255, 255, 255),
+            CloudWhite = Color3.fromRGB(255, 255, 255),
+            CloudPinkLight = Color3.fromRGB(255, 211, 232),
+            CloudPinkDeep = Color3.fromRGB(255, 184, 220),
+            PanelGlass = Color3.fromRGB(255, 255, 255),
+            PanelTint = Color3.fromRGB(255, 233, 242),
+            Gold = Color3.fromRGB(240, 201, 135),
+            Rose = Color3.fromRGB(214, 97, 143),
+            RoseDeep = Color3.fromRGB(184, 74, 120),
+            TextDark = Color3.fromRGB(92, 58, 78),
+            SliderTrack = Color3.fromRGB(248, 215, 232),
+            SliderFillA = Color3.fromRGB(255, 143, 191),
+            SliderFillB = Color3.fromRGB(255, 211, 232),
+            ToggleOn = Color3.fromRGB(255, 143, 191),
+            ToggleOff = Color3.fromRGB(232, 216, 224),
+            InputBorder = Color3.fromRGB(232, 175, 201),
+            DropdownBg = Color3.fromRGB(255, 245, 248),
+            DropdownHover = Color3.fromRGB(255, 225, 235),
+            KeybindBg = Color3.fromRGB(240, 230, 235),
+            ColorPickerBg = Color3.fromRGB(255, 240, 245),
+        },
+        Fonts = {
+            Title = FontFace.new("rbxasset://fonts/families/FredokaOne.ttf"),
+            Body = FontFace.new("rbxasset://fonts/families/Nunito.ttf"),
+            BodyBold = FontFace.new("rbxasset://fonts/families/Nunito.ttf", Enum.FontWeight.Bold),
+        },
+    },
 }
 
 local TweenService = game:GetService("TweenService")
@@ -37,74 +37,74 @@ local Players = game:GetService("Players")
 local TextService = game:GetService("TextService")
 
 local function Tween(obj, props, duration, style, dir)
-	local info = TweenInfo.new(duration or 0.2, style or Enum.EasingStyle.Quad, dir or Enum.EasingDirection.Out)
-	local t = TweenService:Create(obj, info, props)
-	t:Play()
-	return t
+    local info = TweenInfo.new(duration or 0.2, style or Enum.EasingStyle.Quad, dir or Enum.EasingDirection.Out)
+    local t = TweenService:Create(obj, info, props)
+    t:Play()
+    return t
 end
 
 local function NewCorner(parent, radius)
-	local c = Instance.new("UICorner")
-	c.CornerRadius = radius
-	c.Parent = parent
-	return c
+    local c = Instance.new("UICorner")
+    c.CornerRadius = radius
+    c.Parent = parent
+    return c
 end
 
 local function getScale()
-	local viewport = workspace.CurrentCamera and workspace.CurrentCamera.ViewportSize or Vector2.new(1920, 1080)
-	local baseWidth = 1920
-	local baseHeight = 1080
-	local scaleX = viewport.X / baseWidth
-	local scaleY = viewport.Y / baseHeight
-	return math.min(scaleX, scaleY)
+    local viewport = workspace.CurrentCamera and workspace.CurrentCamera.ViewportSize or Vector2.new(1920, 1080)
+    local baseWidth = 1920
+    local baseHeight = 1080
+    local scaleX = viewport.X / baseWidth
+    local scaleY = viewport.Y / baseHeight
+    return math.min(scaleX, scaleY)
 end
 
 local function scaleOffset(offset)
-	return offset * getScale()
+    return offset * getScale()
 end
 
 local function scaleUDim2(udim2)
-	local xScale = udim2.X.Scale
-	local xOffset = udim2.X.Offset * getScale()
-	local yScale = udim2.Y.Scale
-	local yOffset = udim2.Y.Offset * getScale()
-	return UDim2.new(xScale, xOffset, yScale, yOffset)
+    local xScale = udim2.X.Scale
+    local xOffset = udim2.X.Offset * getScale()
+    local yScale = udim2.Y.Scale
+    local yOffset = udim2.Y.Offset * getScale()
+    return UDim2.new(xScale, xOffset, yScale, yOffset)
 end
 
 local function CreateCloudIcon(parent, x, y, scale, color, opacity)
-	local holder = Instance.new("Frame")
-	holder.Name = "CloudIcon"
-	holder.Size = UDim2.fromOffset(64 * scale, 44 * scale)
-	holder.Position = UDim2.fromOffset(x, y)
-	holder.BackgroundTransparency = 1
-	holder.Parent = parent
+    local holder = Instance.new("Frame")
+    holder.Name = "CloudIcon"
+    holder.Size = UDim2.fromOffset(64 * scale, 44 * scale)
+    holder.Position = UDim2.fromOffset(x, y)
+    holder.BackgroundTransparency = 1
+    holder.Parent = parent
 
-	local body = Instance.new("Frame")
-	body.Size = UDim2.fromOffset(64 * scale, 26 * scale)
-	body.Position = UDim2.fromOffset(0, 18 * scale)
-	body.BackgroundColor3 = color
-	body.BackgroundTransparency = 1 - opacity
-	body.BorderSizePixel = 0
-	body.Parent = holder
-	NewCorner(body, UDim.new(0, 13 * scale))
+    local body = Instance.new("Frame")
+    body.Size = UDim2.fromOffset(64 * scale, 26 * scale)
+    body.Position = UDim2.fromOffset(0, 18 * scale)
+    body.BackgroundColor3 = color
+    body.BackgroundTransparency = 1 - opacity
+    body.BorderSizePixel = 0
+    body.Parent = holder
+    NewCorner(body, UDim.new(0, 13 * scale))
 
-	local bumps = {
-		{4 * scale, 6 * scale, 26 * scale, 26 * scale},
-		{22 * scale, -4 * scale, 32 * scale, 32 * scale},
-		{46 * scale, 8 * scale, 24 * scale, 24 * scale},
-	}
-	for _, b in ipairs(bumps) do
-		local bump = Instance.new("Frame")
-		bump.Size = UDim2.fromOffset(b[3], b[4])
-		bump.Position = UDim2.fromOffset(b[1], b[2])
-		bump.BackgroundColor3 = color
-		bump.BackgroundTransparency = 1 - opacity
-		bump.BorderSizePixel = 0
-		bump.Parent = holder
-		NewCorner(bump, UDim.new(1, 0))
-	end
+    local bumps = {
+        {4 * scale, 6 * scale, 26 * scale, 26 * scale},
+        {22 * scale, -4 * scale, 32 * scale, 32 * scale},
+        {46 * scale, 8 * scale, 24 * scale, 24 * scale},
+    }
+    for _, b in ipairs(bumps) do
+        local bump = Instance.new("Frame")
+        bump.Size = UDim2.fromOffset(b[3], b[4])
+        bump.Position = UDim2.fromOffset(b[1], b[2])
+        bump.BackgroundColor3 = color
+        bump.BackgroundTransparency = 1 - opacity
+        bump.BorderSizePixel = 0
+        bump.Parent = holder
+        NewCorner(bump, UDim.new(1, 0))
+    end
 
-	return holder
+    return holder
 end
 
 local NotifyGui = Instance.new("ScreenGui")
@@ -124,1049 +124,1133 @@ NotifyLayout.Padding = UDim.new(0, 8)
 NotifyLayout.Parent = NotifyList
 
 local function EnsureNotifyParent()
-	local player = Players.LocalPlayer
-	if player and not NotifyGui.Parent then
-		NotifyGui.Parent = player:WaitForChild("PlayerGui")
-	end
+    local player = Players.LocalPlayer
+    if player and not NotifyGui.Parent then
+        NotifyGui.Parent = player:WaitForChild("PlayerGui")
+    end
 end
 
 function Mey:Notify(config)
-	EnsureNotifyParent()
-	local title = config.Title or "Notification"
-	local content = config.Content or ""
-	local duration = config.Duration or 5
+    EnsureNotifyParent()
+    local title = config.Title or "Notification"
+    local content = config.Content or ""
+    local duration = config.Duration or 5
 
-	local frame = Instance.new("Frame")
-	frame.Size = UDim2.new(1, 0, 0, 0)
-	frame.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-	frame.BackgroundTransparency = 0.3
-	frame.ClipsDescendants = true
-	frame.Parent = NotifyList
-	NewCorner(frame, UDim.new(0, 14))
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(1, 0, 0, 0)
+    frame.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+    frame.BackgroundTransparency = 0.3
+    frame.ClipsDescendants = true
+    frame.Parent = NotifyList
+    NewCorner(frame, UDim.new(0, 14))
 
-	local stroke = Instance.new("UIStroke")
-	stroke.Color = Mey.Theme.Colors.Gold
-	stroke.Parent = frame
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Mey.Theme.Colors.Gold
+    stroke.Parent = frame
 
-	local titleLabel = Instance.new("TextLabel")
-	titleLabel.Size = UDim2.new(1, -20, 0, 20)
-	titleLabel.Position = UDim2.new(0, 10, 0, 8)
-	titleLabel.BackgroundTransparency = 1
-	titleLabel.Text = title
-	titleLabel.TextColor3 = Mey.Theme.Colors.RoseDeep
-	titleLabel.TextSize = 14
-	titleLabel.FontFace = Mey.Theme.Fonts.BodyBold
-	titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-	titleLabel.Parent = frame
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, -20, 0, 20)
+    titleLabel.Position = UDim2.new(0, 10, 0, 8)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Text = title
+    titleLabel.TextColor3 = Mey.Theme.Colors.RoseDeep
+    titleLabel.TextSize = 14
+    titleLabel.FontFace = Mey.Theme.Fonts.BodyBold
+    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    titleLabel.Parent = frame
 
-	local contentLabel = Instance.new("TextLabel")
-	contentLabel.Size = UDim2.new(1, -20, 0, 0)
-	contentLabel.Position = UDim2.new(0, 10, 0, 28)
-	contentLabel.BackgroundTransparency = 1
-	contentLabel.Text = content
-	contentLabel.TextColor3 = Mey.Theme.Colors.TextDark
-	contentLabel.TextSize = 13
-	contentLabel.FontFace = Mey.Theme.Fonts.Body
-	contentLabel.TextWrapped = true
-	contentLabel.TextXAlignment = Enum.TextXAlignment.Left
-	contentLabel.TextYAlignment = Enum.TextYAlignment.Top
-	contentLabel.Parent = frame
+    local contentLabel = Instance.new("TextLabel")
+    contentLabel.Size = UDim2.new(1, -20, 0, 0)
+    contentLabel.Position = UDim2.new(0, 10, 0, 28)
+    contentLabel.BackgroundTransparency = 1
+    contentLabel.Text = content
+    contentLabel.TextColor3 = Mey.Theme.Colors.TextDark
+    contentLabel.TextSize = 13
+    contentLabel.FontFace = Mey.Theme.Fonts.Body
+    contentLabel.TextWrapped = true
+    contentLabel.TextXAlignment = Enum.TextXAlignment.Left
+    contentLabel.TextYAlignment = Enum.TextYAlignment.Top
+    contentLabel.Parent = frame
 
-	local textHeight = TextService:GetTextSize(content, 13, Enum.Font.Gotham, Vector2.new(280, math.huge)).Y
-	contentLabel.Size = UDim2.new(1, -20, 0, textHeight)
-	local targetHeight = textHeight + 40
+    local textHeight = TextService:GetTextSize(content, 13, Enum.Font.Gotham, Vector2.new(280, math.huge)).Y
+    contentLabel.Size = UDim2.new(1, -20, 0, textHeight)
+    local targetHeight = textHeight + 40
 
-	Tween(frame, { Size = UDim2.new(1, 0, 0, targetHeight) }, 0.3)
+    Tween(frame, { Size = UDim2.new(1, 0, 0, targetHeight) }, 0.3)
 
-	task.delay(duration, function()
-		Tween(frame, { Size = UDim2.new(1, 0, 0, 0), BackgroundTransparency = 1 }, 0.3).Completed:Connect(function()
-			frame:Destroy()
-		end)
-	end)
+    task.delay(duration, function()
+        Tween(frame, { Size = UDim2.new(1, 0, 0, 0), BackgroundTransparency = 1 }, 0.3).Completed:Connect(function()
+            frame:Destroy()
+        end)
+    end)
 end
 
 function Mey:CreateWindow(config)
-	config = config or {}
-	local title = config.Title or "✦ Cloud Kingdom ✦"
-	local size = config.Size or UDim2.fromOffset(640, 560)
-	local scaledSize = scaleUDim2(size)
-
-	local window = {
-		Tabs = {},
-		CurrentTab = nil,
-		Minimized = false,
-		Unloaded = false,
-		Connections = {},
-		_savedPosition = nil,
-	}
-
-	local player = Players.LocalPlayer
-	local playerGui = player:WaitForChild("PlayerGui")
-
-	local screenGui = Instance.new("ScreenGui")
-	screenGui.Name = "Mey_UI"
-	screenGui.ResetOnSpawn = false
-	screenGui.IgnoreGuiInset = true
-	screenGui.Parent = playerGui
-
-	local panel = Instance.new("Frame")
-	panel.Name = "Panel"
-	panel.Size = scaledSize
-	panel.Position = UDim2.new(0.5, -scaledSize.X.Offset / 2, 0.5, -scaledSize.Y.Offset / 2)
-	panel.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-	panel.BackgroundTransparency = 0.5
-	panel.BorderSizePixel = 0
-	panel.ClipsDescendants = false
-	panel.Parent = screenGui
-
-	local panelGradient = Instance.new("UIGradient")
-	panelGradient.Color = ColorSequence.new(Mey.Theme.Colors.PanelGlass, Mey.Theme.Colors.PanelTint)
-	panelGradient.Rotation = 90
-	panelGradient.Parent = panel
-
-	local panelStroke = Instance.new("UIStroke")
-	panelStroke.Color = Mey.Theme.Colors.Gold
-	panelStroke.Thickness = 2
-	panelStroke.Parent = panel
-
-	local cloudScale = 1.0
-	local panelCorners = {
-		{0, 0},
-		{scaledSize.X.Offset, 0},
-		{0, scaledSize.Y.Offset},
-		{scaledSize.X.Offset, scaledSize.Y.Offset},
-	}
-	for _, c in ipairs(panelCorners) do
-		CreateCloudIcon(panel, c[1] - 32, c[2] - 20, cloudScale, Mey.Theme.Colors.CloudWhite, 1)
-		CreateCloudIcon(panel, c[1] - 14, c[2] - 8, 0.6 * cloudScale, Mey.Theme.Colors.CloudPinkLight, 0.9)
-	end
-
-	local icon = Instance.new("ImageLabel")
-	icon.Name = "MinimizeIcon"
-	icon.Size = UDim2.new(0, 50, 0, 50)
-	icon.Position = UDim2.new(1, -60, 1, -60)
-	icon.Image = "rbxassetid://105025328866768"
-	icon.BackgroundColor3 = Mey.Theme.Colors.Rose
-	icon.BackgroundTransparency = 0
-	icon.Visible = false
-	icon.Parent = screenGui
-	NewCorner(icon, UDim.new(1, 0))
-	local iconStroke = Instance.new("UIStroke")
-	iconStroke.Color = Mey.Theme.Colors.Gold
-	iconStroke.Thickness = 2
-	iconStroke.Parent = icon
-
-	function window:Destroy()
-		for _, conn in ipairs(window.Connections) do
-			conn:Disconnect()
-		end
-		window.Unloaded = true
-		screenGui:Destroy()
-	end
-
-	local dragging, dragInput, dragStart, startPos
-	panel.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = true
-			dragStart = input.Position
-			startPos = panel.Position
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					dragging = false
-				end
-			end)
-		end
-	end)
-	panel.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			dragInput = input
-		end
-	end)
-	table.insert(
-		window.Connections,
-		UserInputService.InputChanged:Connect(function(input)
-			if input == dragInput and dragging then
-				local delta = input.Position - dragStart
-				panel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-			end
-		end)
-	)
-
-	local iconDragging, iconDragInput, iconDragStart, iconStartPos
-	icon.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			iconDragging = true
-			iconDragStart = input.Position
-			iconStartPos = icon.Position
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					iconDragging = false
-				end
-			end)
-		end
-	end)
-	icon.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			iconDragInput = input
-		end
-	end)
-	table.insert(
-		window.Connections,
-		UserInputService.InputChanged:Connect(function(input)
-			if input == iconDragInput and iconDragging then
-				local delta = input.Position - iconDragStart
-				icon.Position = UDim2.new(iconStartPos.X.Scale, iconStartPos.X.Offset + delta.X, iconStartPos.Y.Scale, iconStartPos.Y.Offset + delta.Y)
-			end
-		end)
-	)
-
-	local titleBar = Instance.new("Frame")
-	titleBar.Name = "TitleBar"
-	titleBar.Size = UDim2.new(1, 0, 0, 70)
-	titleBar.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-	titleBar.BackgroundTransparency = 0.6
-	titleBar.BorderSizePixel = 0
-	titleBar.Parent = panel
-
-	local titleLabel = Instance.new("TextLabel")
-	titleLabel.Size = UDim2.new(1, 0, 1, 0)
-	titleLabel.BackgroundTransparency = 1
-	titleLabel.Text = title
-	titleLabel.TextColor3 = Mey.Theme.Colors.RoseDeep
-	titleLabel.TextSize = 26
-	titleLabel.FontFace = Mey.Theme.Fonts.Title
-	titleLabel.Parent = titleBar
-
-	local controls = Instance.new("Frame")
-	controls.Size = UDim2.new(0, 60, 0, 35)
-	controls.Position = UDim2.new(1, -65, 0, 0)
-	controls.BackgroundTransparency = 1
-	controls.Parent = titleBar
-
-	local function CreateControl(label, x, color, callback, tooltipText)
-		local btn = Instance.new("TextButton")
-		btn.Size = UDim2.new(0, 22, 0, 22)
-		btn.Position = UDim2.new(0, x, 0.5, -11)
-		btn.BackgroundColor3 = color
-		btn.Text = label
-		btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-		btn.FontFace = Mey.Theme.Fonts.BodyBold
-		btn.AutoButtonColor = false
-		btn.Parent = controls
-		NewCorner(btn, UDim.new(1, 0))
-
-		if tooltipText then
-			local tip = Instance.new("TextLabel")
-			tip.Size = UDim2.new(0, 100, 0, 20)
-			tip.Position = UDim2.new(0.5, -50, 1, 5)
-			tip.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-			tip.BackgroundTransparency = 0.8
-			tip.Text = tooltipText
-			tip.TextColor3 = Color3.fromRGB(255, 255, 255)
-			tip.TextSize = 12
-			tip.FontFace = Mey.Theme.Fonts.Body
-			tip.Visible = false
-			tip.Parent = btn
-			NewCorner(tip, UDim.new(0, 6))
-
-			btn.MouseEnter:Connect(function() tip.Visible = true end)
-			btn.MouseLeave:Connect(function() tip.Visible = false end)
-		end
-
-		btn.MouseButton1Click:Connect(callback)
-		return btn
-	end
-
-	CreateControl("×", 30, Mey.Theme.Colors.Rose, function()
-		Tween(panel, { Size = UDim2.new(0, scaledSize.X.Offset, 0, 0) }, 0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In).Completed:Connect(function()
-			window:Destroy()
-		end)
-	end, "Close")
-
-	CreateControl("−", 0, Mey.Theme.Colors.Gold, function()
-		window.Minimized = not window.Minimized
-		if window.Minimized then
-			window._savedPosition = panel.Position
-			panel.Visible = false
-			icon.Visible = true
-			icon.Position = UDim2.new(1, -60, 1, -60)
-		else
-			icon.Visible = false
-			panel.Visible = true
-			if window._savedPosition then
-				panel.Position = window._savedPosition
-			end
-		end
-	end, "Minimize")
-
-	icon.MouseButton1Click:Connect(function()
-		if window.Minimized then
-			window.Minimized = false
-			icon.Visible = false
-			panel.Visible = true
-			if window._savedPosition then
-				panel.Position = window._savedPosition
-			end
-		end
-	end)
-
-	local sidebar = Instance.new("Frame")
-	sidebar.Name = "Sidebar"
-	sidebar.Size = UDim2.new(0, 160, 1, -70)
-	sidebar.Position = UDim2.new(0, 0, 0, 70)
-	sidebar.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-	sidebar.BackgroundTransparency = 0.75
-	sidebar.BorderSizePixel = 0
-	sidebar.Parent = panel
-
-	local sidebarList = Instance.new("UIListLayout")
-	sidebarList.Padding = UDim.new(0, 8)
-	sidebarList.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	sidebarList.Parent = sidebar
-
-	local sidebarPadding = Instance.new("UIPadding")
-	sidebarPadding.PaddingTop = UDim.new(0, 16)
-	sidebarPadding.Parent = sidebar
-
-	local container = Instance.new("Frame")
-	container.Name = "Container"
-	container.Size = UDim2.new(1, -170, 1, -85)
-	container.Position = UDim2.new(0, 165, 0, 80)
-	container.BackgroundTransparency = 1
-	container.Parent = panel
-
-	function window:CreateTab(name)
-		local tab = { Page = Instance.new("ScrollingFrame") }
-		tab.Page.Size = UDim2.new(1, 0, 1, 0)
-		tab.Page.BackgroundTransparency = 1
-		tab.Page.Visible = false
-		tab.Page.ScrollBarThickness = 4
-		tab.Page.ScrollBarImageColor3 = Mey.Theme.Colors.Rose
-		tab.Page.BorderSizePixel = 0
-		tab.Page.Parent = container
-
-		local pageList = Instance.new("UIListLayout")
-		pageList.Padding = UDim.new(0, 10)
-		pageList.Parent = tab.Page
-
-		local btn = Instance.new("TextButton")
-		btn.Size = UDim2.new(0.85, 0, 0, 38)
-		btn.BackgroundColor3 = Mey.Theme.Colors.ToggleOn
-		btn.BackgroundTransparency = 1
-		btn.Text = name
-		btn.TextColor3 = Mey.Theme.Colors.TextDark
-		btn.FontFace = Mey.Theme.Fonts.Body
-		btn.TextSize = 14
-		btn.Parent = sidebar
-		NewCorner(btn, UDim.new(0, 18))
-
-		local function Select()
-			if window.CurrentTab then
-				window.CurrentTab.Page.Visible = false
-				Tween(window.CurrentTab.Button, { BackgroundTransparency = 1, TextColor3 = Mey.Theme.Colors.TextDark })
-			end
-			window.CurrentTab = tab
-			tab.Page.Visible = true
-			Tween(btn, { BackgroundTransparency = 0.15, TextColor3 = Color3.fromRGB(255, 255, 255) })
-		end
-
-		btn.MouseButton1Click:Connect(Select)
-		tab.Button = btn
-		if not window.CurrentTab then
-			Select()
-		end
-
-		local page = {}
-
-		function page:CreateSeparator(text)
-			local frame = Instance.new("Frame")
-			frame.Size = UDim2.new(1, 0, 0, 30)
-			frame.BackgroundTransparency = 1
-			frame.Parent = tab.Page
-
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(1, 0, 1, 0)
-			label.BackgroundTransparency = 1
-			label.Text = text or "──────────"
-			label.TextColor3 = Mey.Theme.Colors.RoseDeep
-			label.FontFace = Mey.Theme.Fonts.Body
-			label.TextSize = 14
-			label.TextWrapped = true
-			label.TextXAlignment = Enum.TextXAlignment.Center
-			label.Parent = frame
-
-			return frame
-		end
-
-		function page:CreateLabel(cfg)
-			cfg = cfg or {}
-			local frame = Instance.new("Frame")
-			frame.Size = UDim2.new(1, 0, 0, 30)
-			frame.BackgroundTransparency = 1
-			frame.Parent = tab.Page
-
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(1, 0, 1, 0)
-			label.BackgroundTransparency = 1
-			label.Text = cfg.Text or ""
-			label.TextColor3 = Mey.Theme.Colors.TextDark
-			label.FontFace = Mey.Theme.Fonts.Body
-			label.TextSize = 14
-			label.TextXAlignment = Enum.TextXAlignment.Left
-			label.Parent = frame
-
-			return label
-		end
-
-		function page:CreateButton(cfg)
-			cfg = cfg or {}
-			local btnFrame = Instance.new("TextButton")
-			btnFrame.Size = UDim2.new(1, 0, 0, 44)
-			btnFrame.BackgroundColor3 = Mey.Theme.Colors.SliderFillA
-			btnFrame.Text = cfg.Text or "Confirm"
-			btnFrame.TextColor3 = Color3.fromRGB(255, 255, 255)
-			btnFrame.FontFace = Mey.Theme.Fonts.BodyBold
-			btnFrame.TextSize = 15
-			btnFrame.AutoButtonColor = false
-			btnFrame.Parent = tab.Page
-			NewCorner(btnFrame, UDim.new(0, 22))
-
-			local grad = Instance.new("UIGradient")
-			grad.Color = ColorSequence.new(Mey.Theme.Colors.SliderFillA, Mey.Theme.Colors.BGBottom)
-			grad.Parent = btnFrame
-
-			local stroke = Instance.new("UIStroke")
-			stroke.Color = Mey.Theme.Colors.Gold
-			stroke.Thickness = 1.5
-			stroke.Parent = btnFrame
-
-			btnFrame.MouseButton1Click:Connect(function()
-				Tween(btnFrame, { BackgroundTransparency = 0.3 }, 0.1).Completed:Connect(function()
-					Tween(btnFrame, { BackgroundTransparency = 0 }, 0.1)
-				end)
-				if cfg.Callback then
-					cfg.Callback()
-				end
-			end)
-
-			return btnFrame
-		end
-
-		function page:CreateToggle(cfg)
-			cfg = cfg or {}
-			local frame = Instance.new("Frame")
-			frame.Size = UDim2.new(1, 0, 0, 35)
-			frame.BackgroundTransparency = 1
-			frame.Parent = tab.Page
-
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(1, -70, 1, 0)
-			label.Text = cfg.Text or "Toggle"
-			label.TextColor3 = Mey.Theme.Colors.TextDark
-			label.BackgroundTransparency = 1
-			label.FontFace = Mey.Theme.Fonts.Body
-			label.TextSize = 14
-			label.TextXAlignment = Enum.TextXAlignment.Left
-			label.Parent = frame
-
-			local box = Instance.new("TextButton")
-			box.Size = UDim2.new(0, 56, 0, 28)
-			box.Position = UDim2.new(1, -56, 0.5, -14)
-			box.BackgroundColor3 = Mey.Theme.Colors.ToggleOff
-			box.Text = ""
-			box.AutoButtonColor = false
-			box.Parent = frame
-			NewCorner(box, UDim.new(1, 0))
-
-			local dot = Instance.new("Frame")
-			dot.Size = UDim2.new(0, 22, 0, 22)
-			dot.Position = UDim2.new(0, 3, 0.5, -11)
-			dot.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-			dot.Parent = box
-			NewCorner(dot, UDim.new(1, 0))
-
-			local state = cfg.Default or false
-
-			local function Update()
-				if state then
-					Tween(dot, { Position = UDim2.new(1, -25, 0.5, -11) })
-					Tween(box, { BackgroundColor3 = Mey.Theme.Colors.ToggleOn })
-				else
-					Tween(dot, { Position = UDim2.new(0, 3, 0.5, -11) })
-					Tween(box, { BackgroundColor3 = Mey.Theme.Colors.ToggleOff })
-				end
-				if cfg.Callback then
-					cfg.Callback(state)
-				end
-			end
-
-			box.MouseButton1Click:Connect(function()
-				state = not state
-				Update()
-			end)
-
-			Update()
-			return {
-				Set = function(v)
-					state = v
-					Update()
-				end,
-				Get = function()
-					return state
-				end,
-			}
-		end
-
-		function page:CreateSlider(cfg)
-			cfg = cfg or {}
-			local frame = Instance.new("Frame")
-			frame.Size = UDim2.new(1, 0, 0, 48)
-			frame.BackgroundTransparency = 1
-			frame.Parent = tab.Page
-
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(1, -50, 0, 20)
-			label.Text = cfg.Text or "Slider"
-			label.TextColor3 = Mey.Theme.Colors.TextDark
-			label.BackgroundTransparency = 1
-			label.FontFace = Mey.Theme.Fonts.Body
-			label.TextSize = 14
-			label.TextXAlignment = Enum.TextXAlignment.Left
-			label.Parent = frame
-
-			local valueLabel = Instance.new("TextLabel")
-			valueLabel.Size = UDim2.new(0, 50, 0, 20)
-			valueLabel.Position = UDim2.new(1, -50, 0, 0)
-			valueLabel.Text = tostring(cfg.Default or cfg.Min or 0)
-			valueLabel.TextColor3 = Mey.Theme.Colors.RoseDeep
-			valueLabel.BackgroundTransparency = 1
-			valueLabel.FontFace = Mey.Theme.Fonts.BodyBold
-			valueLabel.TextSize = 14
-			valueLabel.TextXAlignment = Enum.TextXAlignment.Right
-			valueLabel.Parent = frame
-
-			local track = Instance.new("TextButton")
-			track.Size = UDim2.new(1, 0, 0, 10)
-			track.Position = UDim2.new(0, 0, 0, 30)
-			track.BackgroundColor3 = Mey.Theme.Colors.SliderTrack
-			track.Text = ""
-			track.AutoButtonColor = false
-			track.Parent = frame
-			NewCorner(track, UDim.new(1, 0))
-
-			local fill = Instance.new("Frame")
-			fill.Size = UDim2.new(0, 0, 1, 0)
-			fill.BackgroundColor3 = Mey.Theme.Colors.SliderFillA
-			fill.BorderSizePixel = 0
-			fill.Parent = track
-			NewCorner(fill, UDim.new(1, 0))
-
-			local fillGrad = Instance.new("UIGradient")
-			fillGrad.Color = ColorSequence.new(Mey.Theme.Colors.SliderFillA, Mey.Theme.Colors.SliderFillB)
-			fillGrad.Parent = fill
-
-			local handle = Instance.new("Frame")
-			handle.AnchorPoint = Vector2.new(0.5, 0.5)
-			handle.Size = UDim2.new(0, 24, 0, 24)
-			handle.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-			handle.ZIndex = 2
-			handle.Parent = track
-			NewCorner(handle, UDim.new(1, 0))
-
-			local handleStroke = Instance.new("UIStroke")
-			handleStroke.Color = Mey.Theme.Colors.RoseDeep
-			handleStroke.Thickness = 2
-			handleStroke.Parent = handle
-
-			local min, max = cfg.Min or 0, cfg.Max or 100
-			local value = cfg.Default or min
-
-			local function Update(frac)
-				frac = math.clamp(frac, 0, 1)
-				value = math.floor(min + (max - min) * frac)
-				Tween(fill, { Size = UDim2.new(frac, 0, 1, 0) }, 0.05)
-				handle.Position = UDim2.new(frac, 0, 0.5, 0)
-				valueLabel.Text = tostring(value)
-				if cfg.Callback then
-					cfg.Callback(value)
-				end
-			end
-
-			local dragging = false
-			local dragConnection = nil
-			local endConnection = nil
-
-			local function startDrag(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-					dragging = true
-					Update((input.Position.X - track.AbsolutePosition.X) / track.AbsoluteSize.X)
-					endConnection = input.Changed:Connect(function()
-						if input.UserInputState == Enum.UserInputState.End then
-							dragging = false
-							if endConnection then endConnection:Disconnect() end
-							if dragConnection then dragConnection:Disconnect() end
-						end
-					end)
-					if not dragConnection then
-						dragConnection = UserInputService.InputChanged:Connect(function(input2)
-							if dragging and (input2.UserInputType == Enum.UserInputType.MouseMovement or input2.UserInputType == Enum.UserInputType.Touch) then
-								Update((input2.Position.X - track.AbsolutePosition.X) / track.AbsoluteSize.X)
-							end
-						end)
-						table.insert(window.Connections, dragConnection)
-					end
-				end
-			end
-
-			track.InputBegan:Connect(startDrag)
-
-			local initFrac = (value - min) / (max - min)
-			fill.Size = UDim2.new(initFrac, 0, 1, 0)
-			handle.Position = UDim2.new(initFrac, 0, 0.5, 0)
-
-			return {
-				Set = function(v)
-					value = math.clamp(v, min, max)
-					local frac = (value - min) / (max - min)
-					Tween(fill, { Size = UDim2.new(frac, 0, 1, 0) }, 0.1)
-					handle.Position = UDim2.new(frac, 0, 0.5, 0)
-					valueLabel.Text = tostring(value)
-				end,
-				Get = function()
-					return value
-				end,
-			}
-		end
-
-		function page:CreateNumberInput(cfg)
-			cfg = cfg or {}
-			local min, max = cfg.Min or 0, cfg.Max or 100
-			local step = cfg.Step or 1
-			local value = cfg.Default or min
-
-			local frame = Instance.new("Frame")
-			frame.Size = UDim2.new(1, 0, 0, 44)
-			frame.BackgroundTransparency = 1
-			frame.Parent = tab.Page
-
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(0.5, 0, 1, 0)
-			label.Text = cfg.Text or "Number Input"
-			label.TextColor3 = Mey.Theme.Colors.TextDark
-			label.BackgroundTransparency = 1
-			label.FontFace = Mey.Theme.Fonts.Body
-			label.TextSize = 14
-			label.TextXAlignment = Enum.TextXAlignment.Left
-			label.Parent = frame
-
-			local field = Instance.new("Frame")
-			field.Size = UDim2.new(0, 160, 0, 40)
-			field.Position = UDim2.new(1, -160, 0.5, -20)
-			field.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-			field.BackgroundTransparency = 0.15
-			field.Parent = frame
-			NewCorner(field, UDim.new(0, 14))
-
-			local fieldStroke = Instance.new("UIStroke")
-			fieldStroke.Color = Mey.Theme.Colors.InputBorder
-			fieldStroke.Thickness = 1.5
-			fieldStroke.Parent = field
-
-			local minusBtn = Instance.new("TextButton")
-			minusBtn.Size = UDim2.new(0, 26, 0, 26)
-			minusBtn.Position = UDim2.new(0, 6, 0.5, -13)
-			minusBtn.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-			minusBtn.BackgroundTransparency = 0.4
-			minusBtn.Text = "−"
-			minusBtn.TextColor3 = Mey.Theme.Colors.RoseDeep
-			minusBtn.FontFace = Mey.Theme.Fonts.BodyBold
-			minusBtn.TextSize = 16
-			minusBtn.AutoButtonColor = false
-			minusBtn.Parent = field
-			NewCorner(minusBtn, UDim.new(1, 0))
-
-			local plusBtn = Instance.new("TextButton")
-			plusBtn.Size = UDim2.new(0, 26, 0, 26)
-			plusBtn.Position = UDim2.new(1, -32, 0.5, -13)
-			plusBtn.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
-			plusBtn.BackgroundTransparency = 0.4
-			plusBtn.Text = "+"
-			plusBtn.TextColor3 = Mey.Theme.Colors.RoseDeep
-			plusBtn.FontFace = Mey.Theme.Fonts.BodyBold
-			plusBtn.TextSize = 16
-			plusBtn.AutoButtonColor = false
-			plusBtn.Parent = field
-			NewCorner(plusBtn, UDim.new(1, 0))
-
-			local box = Instance.new("TextBox")
-			box.Size = UDim2.new(1, -72, 1, 0)
-			box.Position = UDim2.new(0, 36, 0, 0)
-			box.BackgroundTransparency = 1
-			box.Text = tostring(value)
-			box.TextColor3 = Mey.Theme.Colors.TextDark
-			box.FontFace = Mey.Theme.Fonts.BodyBold
-			box.TextSize = 16
-			box.ClearTextOnFocus = false
-			box.Parent = field
-
-			local function SetValue(v)
-				value = math.clamp(v, min, max)
-				box.Text = tostring(value)
-				if cfg.Callback then
-					cfg.Callback(value)
-				end
-			end
-
-			minusBtn.MouseButton1Click:Connect(function()
-				SetValue(value - step)
-			end)
-			plusBtn.MouseButton1Click:Connect(function()
-				SetValue(value + step)
-			end)
-
-			box.FocusLost:Connect(function(enterPressed)
-				local n = tonumber(box.Text)
-				if n then
-					SetValue(n)
-				else
-					box.Text = tostring(value)
-				end
-			end)
-
-			box:GetPropertyChangedSignal("Text"):Connect(function()
-				local filtered = box.Text:gsub("[^%d%-%.]", "")
-				if filtered ~= box.Text then
-					box.Text = filtered
-				end
-			end)
-
-			return {
-				Set = function(v)
-					SetValue(v)
-				end,
-				Get = function()
-					return value
-				end,
-			}
-		end
-
-		function page:CreateDropdown(cfg)
-			cfg = cfg or {}
-			local options = cfg.Options or {}
-			local default = cfg.Default or options[1] or ""
-			local value = default
-
-			local frame = Instance.new("Frame")
-			frame.Size = UDim2.new(1, 0, 0, 44)
-			frame.BackgroundTransparency = 1
-			frame.Parent = tab.Page
-
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(0.4, 0, 1, 0)
-			label.Text = cfg.Text or "Dropdown"
-			label.TextColor3 = Mey.Theme.Colors.TextDark
-			label.BackgroundTransparency = 1
-			label.FontFace = Mey.Theme.Fonts.Body
-			label.TextSize = 14
-			label.TextXAlignment = Enum.TextXAlignment.Left
-			label.Parent = frame
-
-			local button = Instance.new("TextButton")
-			button.Size = UDim2.new(0, 180, 0, 34)
-			button.Position = UDim2.new(1, -180, 0.5, -17)
-			button.BackgroundColor3 = Mey.Theme.Colors.DropdownBg
-			button.Text = value
-			button.TextColor3 = Mey.Theme.Colors.TextDark
-			button.FontFace = Mey.Theme.Fonts.Body
-			button.TextSize = 14
-			button.AutoButtonColor = false
-			button.Parent = frame
-			NewCorner(button, UDim.new(0, 14))
-
-			local stroke = Instance.new("UIStroke")
-			stroke.Color = Mey.Theme.Colors.InputBorder
-			stroke.Thickness = 1.5
-			stroke.Parent = button
-
-			local dropdown = Instance.new("Frame")
-			dropdown.Size = UDim2.new(0, 180, 0, 0)
-			dropdown.Position = UDim2.new(1, -180, 0, 34)
-			dropdown.BackgroundColor3 = Mey.Theme.Colors.DropdownBg
-			dropdown.ClipsDescendants = true
-			dropdown.Visible = false
-			dropdown.Parent = frame
-			NewCorner(dropdown, UDim.new(0, 14))
-
-			local dropdownStroke = Instance.new("UIStroke")
-			dropdownStroke.Color = Mey.Theme.Colors.InputBorder
-			dropdownStroke.Thickness = 1.5
-			dropdownStroke.Parent = dropdown
-
-			local list = Instance.new("UIListLayout")
-			list.Padding = UDim.new(0, 2)
-			list.Parent = dropdown
-
-			local function updateDropdown()
-				for _, child in ipairs(dropdown:GetChildren()) do
-					if child:IsA("TextButton") then
-						child:Destroy()
-					end
-				end
-				local height = 0
-				for _, opt in ipairs(options) do
-					local optBtn = Instance.new("TextButton")
-					optBtn.Size = UDim2.new(1, 0, 0, 30)
-					optBtn.BackgroundTransparency = 1
-					optBtn.Text = opt
-					optBtn.TextColor3 = Mey.Theme.Colors.TextDark
-					optBtn.FontFace = Mey.Theme.Fonts.Body
-					optBtn.TextSize = 14
-					optBtn.AutoButtonColor = false
-					optBtn.Parent = dropdown
-					optBtn.MouseEnter:Connect(function()
-						Tween(optBtn, { BackgroundTransparency = 0.85 }, 0.1)
-					end)
-					optBtn.MouseLeave:Connect(function()
-						Tween(optBtn, { BackgroundTransparency = 1 }, 0.1)
-					end)
-					optBtn.MouseButton1Click:Connect(function()
-						value = opt
-						button.Text = value
-						if cfg.Callback then cfg.Callback(value) end
-						dropdown.Visible = false
-						Tween(dropdown, { Size = UDim2.new(0, 180, 0, 0) }, 0.2)
-					end)
-					height = height + 30
-				end
-				dropdown.Size = UDim2.new(0, 180, 0, height)
-			end
-
-			updateDropdown()
-
-			button.MouseButton1Click:Connect(function()
-				if dropdown.Visible then
-					dropdown.Visible = false
-					Tween(dropdown, { Size = UDim2.new(0, 180, 0, 0) }, 0.2)
-				else
-					dropdown.Visible = true
-					Tween(dropdown, { Size = UDim2.new(0, 180, 0, #options * 30) }, 0.2)
-				end
-			end)
-
-			return {
-				Set = function(v)
-					if table.find(options, v) then
-						value = v
-						button.Text = value
-						if cfg.Callback then cfg.Callback(value) end
-					end
-				end,
-				Get = function()
-					return value
-				end,
-				Refresh = function(newOptions)
-					options = newOptions
-					if not table.find(options, value) then
-						value = options[1] or ""
-						button.Text = value
-					end
-					updateDropdown()
-				end
-			}
-		end
-
-		function page:CreateKeybind(cfg)
-			cfg = cfg or {}
-			local defaultKey = cfg.Default or Enum.KeyCode.None
-			local key = defaultKey
-
-			local frame = Instance.new("Frame")
-			frame.Size = UDim2.new(1, 0, 0, 44)
-			frame.BackgroundTransparency = 1
-			frame.Parent = tab.Page
-
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(0.5, 0, 1, 0)
-			label.Text = cfg.Text or "Keybind"
-			label.TextColor3 = Mey.Theme.Colors.TextDark
-			label.BackgroundTransparency = 1
-			label.FontFace = Mey.Theme.Fonts.Body
-			label.TextSize = 14
-			label.TextXAlignment = Enum.TextXAlignment.Left
-			label.Parent = frame
-
-			local bindBtn = Instance.new("TextButton")
-			bindBtn.Size = UDim2.new(0, 120, 0, 34)
-			bindBtn.Position = UDim2.new(1, -120, 0.5, -17)
-			bindBtn.BackgroundColor3 = Mey.Theme.Colors.KeybindBg
-			bindBtn.Text = key == Enum.KeyCode.None and "None" or key.Name
-			bindBtn.TextColor3 = Mey.Theme.Colors.TextDark
-			bindBtn.FontFace = Mey.Theme.Fonts.Body
-			bindBtn.TextSize = 14
-			bindBtn.AutoButtonColor = false
-			bindBtn.Parent = frame
-			NewCorner(bindBtn, UDim.new(0, 14))
-
-			local stroke = Instance.new("UIStroke")
-			stroke.Color = Mey.Theme.Colors.InputBorder
-			stroke.Thickness = 1.5
-			stroke.Parent = bindBtn
-
-			local isListening = false
-			local keyConnection = nil
-
-			bindBtn.MouseButton1Click:Connect(function()
-				if isListening then
-					isListening = false
-					if keyConnection then keyConnection:Disconnect() end
-					bindBtn.Text = key == Enum.KeyCode.None and "None" or key.Name
-					return
-				end
-				isListening = true
-				bindBtn.Text = "..."
-				keyConnection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
-					if gameProcessed then return end
-					if input.UserInputType == Enum.UserInputType.Keyboard then
-						key = input.KeyCode
-						isListening = false
-						bindBtn.Text = key.Name
-						if keyConnection then keyConnection:Disconnect() end
-						if cfg.Callback then cfg.Callback(key) end
-					end
-				end)
-			end)
-
-			return {
-				Set = function(k)
-					key = k
-					bindBtn.Text = key == Enum.KeyCode.None and "None" or key.Name
-					if cfg.Callback then cfg.Callback(key) end
-				end,
-				Get = function()
-					return key
-				end,
-			}
-		end
-
-		function page:CreateColorPicker(cfg)
-			cfg = cfg or {}
-			local defaultColor = cfg.Default or Color3.fromRGB(255, 143, 191)
-			local color = defaultColor
-
-			local frame = Instance.new("Frame")
-			frame.Size = UDim2.new(1, 0, 0, 44)
-			frame.BackgroundTransparency = 1
-			frame.Parent = tab.Page
-
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(0.5, 0, 1, 0)
-			label.Text = cfg.Text or "Color Picker"
-			label.TextColor3 = Mey.Theme.Colors.TextDark
-			label.BackgroundTransparency = 1
-			label.FontFace = Mey.Theme.Fonts.Body
-			label.TextSize = 14
-			label.TextXAlignment = Enum.TextXAlignment.Left
-			label.Parent = frame
-
-			local colorBox = Instance.new("TextButton")
-			colorBox.Size = UDim2.new(0, 80, 0, 34)
-			colorBox.Position = UDim2.new(1, -80, 0.5, -17)
-			colorBox.BackgroundColor3 = color
-			colorBox.Text = ""
-			colorBox.AutoButtonColor = false
-			colorBox.Parent = frame
-			NewCorner(colorBox, UDim.new(0, 14))
-
-			local stroke = Instance.new("UIStroke")
-			stroke.Color = Mey.Theme.Colors.InputBorder
-			stroke.Thickness = 1.5
-			stroke.Parent = colorBox
-
-			local popup = Instance.new("Frame")
-			popup.Size = UDim2.new(0, 200, 0, 0)
-			popup.Position = UDim2.new(1, -200, 0, 34)
-			popup.BackgroundColor3 = Mey.Theme.Colors.ColorPickerBg
-			popup.ClipsDescendants = true
-			popup.Visible = false
-			popup.Parent = frame
-			NewCorner(popup, UDim.new(0, 14))
-
-			local popupStroke = Instance.new("UIStroke")
-			popupStroke.Color = Mey.Theme.Colors.InputBorder
-			popupStroke.Thickness = 1.5
-			popupStroke.Parent = popup
-
-			local grid = Instance.new("Frame")
-			grid.Size = UDim2.new(1, -10, 1, -10)
-			grid.Position = UDim2.new(0, 5, 0, 5)
-			grid.BackgroundTransparency = 1
-			grid.Parent = popup
-
-			local gridLayout = Instance.new("UIGridLayout")
-			gridLayout.CellSize = UDim2.new(0, 30, 0, 30)
-			gridLayout.CellPadding = UDim.new(0, 5)
-			gridLayout.Parent = grid
-
-			local presetColors = {
-				Color3.fromRGB(255, 143, 191),
-				Color3.fromRGB(255, 211, 232),
-				Color3.fromRGB(240, 201, 135),
-				Color3.fromRGB(214, 97, 143),
-				Color3.fromRGB(184, 74, 120),
-				Color3.fromRGB(255, 233, 242),
-				Color3.fromRGB(255, 255, 255),
-				Color3.fromRGB(92, 58, 78),
-				Color3.fromRGB(255, 100, 100),
-				Color3.fromRGB(100, 200, 255),
-				Color3.fromRGB(200, 255, 100),
-				Color3.fromRGB(255, 200, 100),
-			}
-
-			for _, c in ipairs(presetColors) do
-				local btn = Instance.new("TextButton")
-				btn.Size = UDim2.new(0, 30, 0, 30)
-				btn.BackgroundColor3 = c
-				btn.Text = ""
-				btn.AutoButtonColor = false
-				btn.Parent = grid
-				NewCorner(btn, UDim.new(1, 0))
-				btn.MouseButton1Click:Connect(function()
-					color = c
-					colorBox.BackgroundColor3 = color
-					if cfg.Callback then cfg.Callback(color) end
-					popup.Visible = false
-					Tween(popup, { Size = UDim2.new(0, 200, 0, 0) }, 0.2)
-				end)
-			end
-
-			colorBox.MouseButton1Click:Connect(function()
-				if popup.Visible then
-					popup.Visible = false
-					Tween(popup, { Size = UDim2.new(0, 200, 0, 0) }, 0.2)
-				else
-					popup.Visible = true
-					local rowCount = math.ceil(#presetColors / 4)
-					local height = rowCount * 35 + 10
-					Tween(popup, { Size = UDim2.new(0, 200, 0, height) }, 0.2)
-				end
-			end)
-
-			return {
-				Set = function(c)
-					color = c
-					colorBox.BackgroundColor3 = color
-					if cfg.Callback then cfg.Callback(color) end
-				end,
-				Get = function()
-					return color
-				end,
-			}
-		end
-
-		return page
-	end
-
-	return window
+    config = config or {}
+    local title = config.Title or "Cloud Kingdom"
+    local size = config.Size or UDim2.fromOffset(640, 560)
+    local scaledSize = scaleUDim2(size)
+
+    local window = {
+        Tabs = {},
+        CurrentTab = nil,
+        Minimized = false,
+        Unloaded = false,
+        Connections = {},
+        _savedPosition = nil,
+    }
+
+    local player = Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "Mey_UI"
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true
+    screenGui.Parent = playerGui
+
+    local panel = Instance.new("Frame")
+    panel.Name = "Panel"
+    panel.Size = scaledSize
+    panel.Position = UDim2.new(0.5, -scaledSize.X.Offset / 2, 0.5, -scaledSize.Y.Offset / 2)
+    panel.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+    panel.BackgroundTransparency = 0.5
+    panel.BorderSizePixel = 0
+    panel.ClipsDescendants = false
+    panel.Parent = screenGui
+
+    local panelGradient = Instance.new("UIGradient")
+    panelGradient.Color = ColorSequence.new(Mey.Theme.Colors.PanelGlass, Mey.Theme.Colors.PanelTint)
+    panelGradient.Rotation = 90
+    panelGradient.Parent = panel
+
+    local panelStroke = Instance.new("UIStroke")
+    panelStroke.Color = Mey.Theme.Colors.Gold
+    panelStroke.Thickness = 2
+    panelStroke.Parent = panel
+
+    local cloudScale = 1.0
+    local panelCorners = {
+        {0, 0},
+        {scaledSize.X.Offset, 0},
+        {0, scaledSize.Y.Offset},
+        {scaledSize.X.Offset, scaledSize.Y.Offset},
+    }
+    for _, c in ipairs(panelCorners) do
+        CreateCloudIcon(panel, c[1] - 32, c[2] - 20, cloudScale, Mey.Theme.Colors.CloudWhite, 1)
+        CreateCloudIcon(panel, c[1] - 14, c[2] - 8, 0.6 * cloudScale, Mey.Theme.Colors.CloudPinkLight, 0.9)
+    end
+
+    local icon = Instance.new("ImageLabel")
+    icon.Name = "MinimizeIcon"
+    icon.Size = UDim2.new(0, 50, 0, 50)
+    icon.Position = UDim2.new(1, -60, 1, -60)
+    icon.Image = "rbxassetid://105025328866768"
+    icon.BackgroundColor3 = Mey.Theme.Colors.Rose
+    icon.BackgroundTransparency = 0
+    icon.Visible = false
+    icon.Parent = screenGui
+    NewCorner(icon, UDim.new(1, 0))
+    local iconStroke = Instance.new("UIStroke")
+    iconStroke.Color = Mey.Theme.Colors.Gold
+    iconStroke.Thickness = 2
+    iconStroke.Parent = icon
+
+    function window:Destroy()
+        for _, conn in ipairs(window.Connections) do
+            conn:Disconnect()
+        end
+        window.Unloaded = true
+        screenGui:Destroy()
+    end
+
+    local dragging, dragInput, dragStart, startPos
+    panel.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = panel.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+    panel.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+    table.insert(
+        window.Connections,
+        UserInputService.InputChanged:Connect(function(input)
+            if input == dragInput and dragging then
+                local delta = input.Position - dragStart
+                panel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+            end
+        end)
+    )
+
+    local iconDragging, iconDragInput, iconDragStart, iconStartPos
+    icon.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            iconDragging = true
+            iconDragStart = input.Position
+            iconStartPos = icon.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    iconDragging = false
+                end
+            end)
+        end
+    end)
+    icon.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            iconDragInput = input
+        end
+    end)
+    table.insert(
+        window.Connections,
+        UserInputService.InputChanged:Connect(function(input)
+            if input == iconDragInput and iconDragging then
+                local delta = input.Position - iconDragStart
+                icon.Position = UDim2.new(iconStartPos.X.Scale, iconStartPos.X.Offset + delta.X, iconStartPos.Y.Scale, iconStartPos.Y.Offset + delta.Y)
+            end
+        end)
+    )
+
+    local titleBar = Instance.new("Frame")
+    titleBar.Name = "TitleBar"
+    titleBar.Size = UDim2.new(1, 0, 0, 70)
+    titleBar.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+    titleBar.BackgroundTransparency = 0.6
+    titleBar.BorderSizePixel = 0
+    titleBar.Parent = panel
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, 0, 1, 0)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Text = title
+    titleLabel.TextColor3 = Mey.Theme.Colors.RoseDeep
+    titleLabel.TextSize = 26
+    titleLabel.FontFace = Mey.Theme.Fonts.Title
+    titleLabel.Parent = titleBar
+
+    local controls = Instance.new("Frame")
+    controls.Size = UDim2.new(0, 60, 0, 35)
+    controls.Position = UDim2.new(1, -65, 0, 0)
+    controls.BackgroundTransparency = 1
+    controls.Parent = titleBar
+
+    local function CreateControl(label, x, color, callback, tooltipText)
+        local btn = Instance.new("TextButton")
+        btn.Size = UDim2.new(0, 22, 0, 22)
+        btn.Position = UDim2.new(0, x, 0.5, -11)
+        btn.BackgroundColor3 = color
+        btn.Text = label
+        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        btn.FontFace = Mey.Theme.Fonts.BodyBold
+        btn.AutoButtonColor = false
+        btn.Parent = controls
+        NewCorner(btn, UDim.new(1, 0))
+
+        if tooltipText then
+            local tip = Instance.new("TextLabel")
+            tip.Size = UDim2.new(0, 100, 0, 20)
+            tip.Position = UDim2.new(0.5, -50, 1, 5)
+            tip.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            tip.BackgroundTransparency = 0.8
+            tip.Text = tooltipText
+            tip.TextColor3 = Color3.fromRGB(255, 255, 255)
+            tip.TextSize = 12
+            tip.FontFace = Mey.Theme.Fonts.Body
+            tip.Visible = false
+            tip.Parent = btn
+            NewCorner(tip, UDim.new(0, 6))
+
+            btn.MouseEnter:Connect(function() tip.Visible = true end)
+            btn.MouseLeave:Connect(function() tip.Visible = false end)
+        end
+
+        btn.MouseButton1Click:Connect(callback)
+        return btn
+    end
+
+    CreateControl("×", 30, Mey.Theme.Colors.Rose, function()
+        Tween(panel, { Size = UDim2.new(0, scaledSize.X.Offset, 0, 0) }, 0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In).Completed:Connect(function()
+            window:Destroy()
+        end)
+    end, "Close")
+
+    CreateControl("−", 0, Mey.Theme.Colors.Gold, function()
+        window.Minimized = not window.Minimized
+        if window.Minimized then
+            window._savedPosition = panel.Position
+            panel.Visible = false
+            icon.Visible = true
+            icon.Position = UDim2.new(1, -60, 1, -60)
+        else
+            icon.Visible = false
+            panel.Visible = true
+            if window._savedPosition then
+                panel.Position = window._savedPosition
+            end
+        end
+    end, "Minimize")
+
+    icon.MouseButton1Click:Connect(function()
+        if window.Minimized then
+            window.Minimized = false
+            icon.Visible = false
+            panel.Visible = true
+            if window._savedPosition then
+                panel.Position = window._savedPosition
+            end
+        end
+    end)
+
+    local sidebar = Instance.new("Frame")
+    sidebar.Name = "Sidebar"
+    sidebar.Size = UDim2.new(0, 160, 1, -70)
+    sidebar.Position = UDim2.new(0, 0, 0, 70)
+    sidebar.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+    sidebar.BackgroundTransparency = 0.75
+    sidebar.BorderSizePixel = 0
+    sidebar.Parent = panel
+
+    local sidebarList = Instance.new("UIListLayout")
+    sidebarList.Padding = UDim.new(0, 8)
+    sidebarList.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    sidebarList.Parent = sidebar
+
+    local sidebarPadding = Instance.new("UIPadding")
+    sidebarPadding.PaddingTop = UDim.new(0, 16)
+    sidebarPadding.Parent = sidebar
+
+    local container = Instance.new("Frame")
+    container.Name = "Container"
+    container.Size = UDim2.new(1, -170, 1, -85)
+    container.Position = UDim2.new(0, 165, 0, 80)
+    container.BackgroundTransparency = 1
+    container.Parent = panel
+
+    function window:CreateTab(name)
+        local tab = { Page = Instance.new("ScrollingFrame") }
+        tab.Page.Size = UDim2.new(1, 0, 1, 0)
+        tab.Page.BackgroundTransparency = 1
+        tab.Page.Visible = false
+        tab.Page.ScrollBarThickness = 4
+        tab.Page.ScrollBarImageColor3 = Mey.Theme.Colors.Rose
+        tab.Page.BorderSizePixel = 0
+        tab.Page.Parent = container
+
+        local pageList = Instance.new("UIListLayout")
+        pageList.Padding = UDim.new(0, 10)
+        pageList.Parent = tab.Page
+
+        local btn = Instance.new("TextButton")
+        btn.Size = UDim2.new(0.85, 0, 0, 38)
+        btn.BackgroundColor3 = Mey.Theme.Colors.ToggleOn
+        btn.BackgroundTransparency = 1
+        btn.Text = name
+        btn.TextColor3 = Mey.Theme.Colors.TextDark
+        btn.FontFace = Mey.Theme.Fonts.Body
+        btn.TextSize = 14
+        btn.Parent = sidebar
+        NewCorner(btn, UDim.new(0, 18))
+
+        local function Select()
+            if window.CurrentTab then
+                window.CurrentTab.Page.Visible = false
+                Tween(window.CurrentTab.Button, { BackgroundTransparency = 1, TextColor3 = Mey.Theme.Colors.TextDark })
+            end
+            window.CurrentTab = tab
+            tab.Page.Visible = true
+            Tween(btn, { BackgroundTransparency = 0.15, TextColor3 = Color3.fromRGB(255, 255, 255) })
+        end
+
+        btn.MouseButton1Click:Connect(Select)
+        tab.Button = btn
+        if not window.CurrentTab then
+            Select()
+        end
+
+        local page = {}
+
+        function page:CreateSeparator(text)
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 30)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(1, 0, 1, 0)
+            label.BackgroundTransparency = 1
+            label.Text = text or "──────────"
+            label.TextColor3 = Mey.Theme.Colors.RoseDeep
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextWrapped = true
+            label.TextXAlignment = Enum.TextXAlignment.Center
+            label.Parent = frame
+
+            return frame
+        end
+
+        function page:CreateLabel(cfg)
+            cfg = cfg or {}
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 30)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(1, 0, 1, 0)
+            label.BackgroundTransparency = 1
+            label.Text = cfg.Text or ""
+            label.TextColor3 = Mey.Theme.Colors.TextDark
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = frame
+
+            return label
+        end
+
+        function page:CreateParagraph(cfg)
+            local label = page:CreateLabel({ Text = cfg.Title or "" })
+            if cfg.Content then
+                label.Text = cfg.Title .. ": " .. cfg.Content
+            end
+            return {
+                SetDesc = function(content)
+                    label.Text = cfg.Title .. ": " .. content
+                end
+            }
+        end
+
+        function page:CreateInput(cfg)
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 44)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(0.4, 0, 1, 0)
+            label.Text = cfg.Title or "Input"
+            label.TextColor3 = Mey.Theme.Colors.TextDark
+            label.BackgroundTransparency = 1
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = frame
+
+            local field = Instance.new("Frame")
+            field.Size = UDim2.new(0, 160, 0, 40)
+            field.Position = UDim2.new(1, -160, 0.5, -20)
+            field.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+            field.BackgroundTransparency = 0.15
+            field.Parent = frame
+            NewCorner(field, UDim.new(0, 14))
+
+            local fieldStroke = Instance.new("UIStroke")
+            fieldStroke.Color = Mey.Theme.Colors.InputBorder
+            fieldStroke.Thickness = 1.5
+            fieldStroke.Parent = field
+
+            local box = Instance.new("TextBox")
+            box.Size = UDim2.new(1, -20, 1, 0)
+            box.Position = UDim2.new(0, 10, 0, 0)
+            box.BackgroundTransparency = 1
+            box.Text = cfg.Default or ""
+            box.PlaceholderText = cfg.Placeholder or ""
+            box.TextColor3 = Mey.Theme.Colors.TextDark
+            box.FontFace = Mey.Theme.Fonts.Body
+            box.TextSize = 16
+            box.ClearTextOnFocus = false
+            box.Parent = field
+
+            local function onFinish()
+                if cfg.Callback then
+                    cfg.Callback(box.Text)
+                end
+            end
+
+            if cfg.Finished then
+                box.FocusLost:Connect(function(enterPressed)
+                    if enterPressed then
+                        onFinish()
+                    end
+                end)
+            else
+                box:GetPropertyChangedSignal("Text"):Connect(onFinish)
+            end
+
+            return {
+                Set = function(t) box.Text = t end,
+                Get = function() return box.Text end
+            }
+        end
+
+        function page:CreateButton(cfg)
+            cfg = cfg or {}
+            local btnFrame = Instance.new("TextButton")
+            btnFrame.Size = UDim2.new(1, 0, 0, 44)
+            btnFrame.BackgroundColor3 = Mey.Theme.Colors.SliderFillA
+            btnFrame.Text = cfg.Text or "Confirm"
+            btnFrame.TextColor3 = Color3.fromRGB(255, 255, 255)
+            btnFrame.FontFace = Mey.Theme.Fonts.BodyBold
+            btnFrame.TextSize = 15
+            btnFrame.AutoButtonColor = false
+            btnFrame.Parent = tab.Page
+            NewCorner(btnFrame, UDim.new(0, 22))
+
+            local grad = Instance.new("UIGradient")
+            grad.Color = ColorSequence.new(Mey.Theme.Colors.SliderFillA, Mey.Theme.Colors.BGBottom)
+            grad.Parent = btnFrame
+
+            local stroke = Instance.new("UIStroke")
+            stroke.Color = Mey.Theme.Colors.Gold
+            stroke.Thickness = 1.5
+            stroke.Parent = btnFrame
+
+            btnFrame.MouseButton1Click:Connect(function()
+                Tween(btnFrame, { BackgroundTransparency = 0.3 }, 0.1).Completed:Connect(function()
+                    Tween(btnFrame, { BackgroundTransparency = 0 }, 0.1)
+                end)
+                if cfg.Callback then
+                    cfg.Callback()
+                end
+            end)
+
+            return btnFrame
+        end
+
+        function page:CreateToggle(cfg)
+            cfg = cfg or {}
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 35)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(1, -70, 1, 0)
+            label.Text = cfg.Text or "Toggle"
+            label.TextColor3 = Mey.Theme.Colors.TextDark
+            label.BackgroundTransparency = 1
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = frame
+
+            local box = Instance.new("TextButton")
+            box.Size = UDim2.new(0, 56, 0, 28)
+            box.Position = UDim2.new(1, -56, 0.5, -14)
+            box.BackgroundColor3 = Mey.Theme.Colors.ToggleOff
+            box.Text = ""
+            box.AutoButtonColor = false
+            box.Parent = frame
+            NewCorner(box, UDim.new(1, 0))
+
+            local dot = Instance.new("Frame")
+            dot.Size = UDim2.new(0, 22, 0, 22)
+            dot.Position = UDim2.new(0, 3, 0.5, -11)
+            dot.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+            dot.Parent = box
+            NewCorner(dot, UDim.new(1, 0))
+
+            local state = cfg.Default or false
+
+            local function Update()
+                if state then
+                    Tween(dot, { Position = UDim2.new(1, -25, 0.5, -11) })
+                    Tween(box, { BackgroundColor3 = Mey.Theme.Colors.ToggleOn })
+                else
+                    Tween(dot, { Position = UDim2.new(0, 3, 0.5, -11) })
+                    Tween(box, { BackgroundColor3 = Mey.Theme.Colors.ToggleOff })
+                end
+                if cfg.Callback then
+                    cfg.Callback(state)
+                end
+            end
+
+            box.MouseButton1Click:Connect(function()
+                state = not state
+                Update()
+            end)
+
+            Update()
+            return {
+                Set = function(v)
+                    state = v
+                    Update()
+                end,
+                Get = function()
+                    return state
+                end,
+            }
+        end
+
+        function page:CreateSlider(cfg)
+            cfg = cfg or {}
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 48)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(1, -50, 0, 20)
+            label.Text = cfg.Text or "Slider"
+            label.TextColor3 = Mey.Theme.Colors.TextDark
+            label.BackgroundTransparency = 1
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = frame
+
+            local valueLabel = Instance.new("TextLabel")
+            valueLabel.Size = UDim2.new(0, 50, 0, 20)
+            valueLabel.Position = UDim2.new(1, -50, 0, 0)
+            valueLabel.Text = tostring(cfg.Default or cfg.Min or 0)
+            valueLabel.TextColor3 = Mey.Theme.Colors.RoseDeep
+            valueLabel.BackgroundTransparency = 1
+            valueLabel.FontFace = Mey.Theme.Fonts.BodyBold
+            valueLabel.TextSize = 14
+            valueLabel.TextXAlignment = Enum.TextXAlignment.Right
+            valueLabel.Parent = frame
+
+            local track = Instance.new("TextButton")
+            track.Size = UDim2.new(1, 0, 0, 10)
+            track.Position = UDim2.new(0, 0, 0, 30)
+            track.BackgroundColor3 = Mey.Theme.Colors.SliderTrack
+            track.Text = ""
+            track.AutoButtonColor = false
+            track.Parent = frame
+            NewCorner(track, UDim.new(1, 0))
+
+            local fill = Instance.new("Frame")
+            fill.Size = UDim2.new(0, 0, 1, 0)
+            fill.BackgroundColor3 = Mey.Theme.Colors.SliderFillA
+            fill.BorderSizePixel = 0
+            fill.Parent = track
+            NewCorner(fill, UDim.new(1, 0))
+
+            local fillGrad = Instance.new("UIGradient")
+            fillGrad.Color = ColorSequence.new(Mey.Theme.Colors.SliderFillA, Mey.Theme.Colors.SliderFillB)
+            fillGrad.Parent = fill
+
+            local handle = Instance.new("Frame")
+            handle.AnchorPoint = Vector2.new(0.5, 0.5)
+            handle.Size = UDim2.new(0, 24, 0, 24)
+            handle.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+            handle.ZIndex = 2
+            handle.Parent = track
+            NewCorner(handle, UDim.new(1, 0))
+
+            local handleStroke = Instance.new("UIStroke")
+            handleStroke.Color = Mey.Theme.Colors.RoseDeep
+            handleStroke.Thickness = 2
+            handleStroke.Parent = handle
+
+            local min, max = cfg.Min or 0, cfg.Max or 100
+            local value = cfg.Default or min
+
+            local function Update(frac)
+                frac = math.clamp(frac, 0, 1)
+                value = math.floor(min + (max - min) * frac)
+                Tween(fill, { Size = UDim2.new(frac, 0, 1, 0) }, 0.05)
+                handle.Position = UDim2.new(frac, 0, 0.5, 0)
+                valueLabel.Text = tostring(value)
+                if cfg.Callback then
+                    cfg.Callback(value)
+                end
+            end
+
+            local dragging = false
+            local dragConnection = nil
+            local endConnection = nil
+
+            local function startDrag(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    dragging = true
+                    Update((input.Position.X - track.AbsolutePosition.X) / track.AbsoluteSize.X)
+                    endConnection = input.Changed:Connect(function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            dragging = false
+                            if endConnection then endConnection:Disconnect() end
+                            if dragConnection then dragConnection:Disconnect() end
+                        end
+                    end)
+                    if not dragConnection then
+                        dragConnection = UserInputService.InputChanged:Connect(function(input2)
+                            if dragging and (input2.UserInputType == Enum.UserInputType.MouseMovement or input2.UserInputType == Enum.UserInputType.Touch) then
+                                Update((input2.Position.X - track.AbsolutePosition.X) / track.AbsoluteSize.X)
+                            end
+                        end)
+                        table.insert(window.Connections, dragConnection)
+                    end
+                end
+            end
+
+            track.InputBegan:Connect(startDrag)
+
+            local initFrac = (value - min) / (max - min)
+            fill.Size = UDim2.new(initFrac, 0, 1, 0)
+            handle.Position = UDim2.new(initFrac, 0, 0.5, 0)
+
+            return {
+                Set = function(v)
+                    value = math.clamp(v, min, max)
+                    local frac = (value - min) / (max - min)
+                    Tween(fill, { Size = UDim2.new(frac, 0, 1, 0) }, 0.1)
+                    handle.Position = UDim2.new(frac, 0, 0.5, 0)
+                    valueLabel.Text = tostring(value)
+                end,
+                Get = function()
+                    return value
+                end,
+            }
+        end
+
+        function page:CreateNumberInput(cfg)
+            cfg = cfg or {}
+            local min, max = cfg.Min or 0, cfg.Max or 100
+            local step = cfg.Step or 1
+            local value = cfg.Default or min
+
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 44)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(0.5, 0, 1, 0)
+            label.Text = cfg.Text or "Number Input"
+            label.TextColor3 = Mey.Theme.Colors.TextDark
+            label.BackgroundTransparency = 1
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = frame
+
+            local field = Instance.new("Frame")
+            field.Size = UDim2.new(0, 160, 0, 40)
+            field.Position = UDim2.new(1, -160, 0.5, -20)
+            field.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+            field.BackgroundTransparency = 0.15
+            field.Parent = frame
+            NewCorner(field, UDim.new(0, 14))
+
+            local fieldStroke = Instance.new("UIStroke")
+            fieldStroke.Color = Mey.Theme.Colors.InputBorder
+            fieldStroke.Thickness = 1.5
+            fieldStroke.Parent = field
+
+            local minusBtn = Instance.new("TextButton")
+            minusBtn.Size = UDim2.new(0, 26, 0, 26)
+            minusBtn.Position = UDim2.new(0, 6, 0.5, -13)
+            minusBtn.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+            minusBtn.BackgroundTransparency = 0.4
+            minusBtn.Text = "−"
+            minusBtn.TextColor3 = Mey.Theme.Colors.RoseDeep
+            minusBtn.FontFace = Mey.Theme.Fonts.BodyBold
+            minusBtn.TextSize = 16
+            minusBtn.AutoButtonColor = false
+            minusBtn.Parent = field
+            NewCorner(minusBtn, UDim.new(1, 0))
+
+            local plusBtn = Instance.new("TextButton")
+            plusBtn.Size = UDim2.new(0, 26, 0, 26)
+            plusBtn.Position = UDim2.new(1, -32, 0.5, -13)
+            plusBtn.BackgroundColor3 = Mey.Theme.Colors.PanelGlass
+            plusBtn.BackgroundTransparency = 0.4
+            plusBtn.Text = "+"
+            plusBtn.TextColor3 = Mey.Theme.Colors.RoseDeep
+            plusBtn.FontFace = Mey.Theme.Fonts.BodyBold
+            plusBtn.TextSize = 16
+            plusBtn.AutoButtonColor = false
+            plusBtn.Parent = field
+            NewCorner(plusBtn, UDim.new(1, 0))
+
+            local box = Instance.new("TextBox")
+            box.Size = UDim2.new(1, -72, 1, 0)
+            box.Position = UDim2.new(0, 36, 0, 0)
+            box.BackgroundTransparency = 1
+            box.Text = tostring(value)
+            box.TextColor3 = Mey.Theme.Colors.TextDark
+            box.FontFace = Mey.Theme.Fonts.BodyBold
+            box.TextSize = 16
+            box.ClearTextOnFocus = false
+            box.Parent = field
+
+            local function SetValue(v)
+                value = math.clamp(v, min, max)
+                box.Text = tostring(value)
+                if cfg.Callback then
+                    cfg.Callback(value)
+                end
+            end
+
+            minusBtn.MouseButton1Click:Connect(function()
+                SetValue(value - step)
+            end)
+            plusBtn.MouseButton1Click:Connect(function()
+                SetValue(value + step)
+            end)
+
+            box.FocusLost:Connect(function(enterPressed)
+                local n = tonumber(box.Text)
+                if n then
+                    SetValue(n)
+                else
+                    box.Text = tostring(value)
+                end
+            end)
+
+            box:GetPropertyChangedSignal("Text"):Connect(function()
+                local filtered = box.Text:gsub("[^%d%-%.]", "")
+                if filtered ~= box.Text then
+                    box.Text = filtered
+                end
+            end)
+
+            return {
+                Set = function(v)
+                    SetValue(v)
+                end,
+                Get = function()
+                    return value
+                end,
+            }
+        end
+
+        function page:CreateDropdown(cfg)
+            cfg = cfg or {}
+            local options = cfg.Options or {}
+            local default = cfg.Default or options[1] or ""
+            local value = default
+
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 44)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(0.4, 0, 1, 0)
+            label.Text = cfg.Text or "Dropdown"
+            label.TextColor3 = Mey.Theme.Colors.TextDark
+            label.BackgroundTransparency = 1
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = frame
+
+            local button = Instance.new("TextButton")
+            button.Size = UDim2.new(0, 180, 0, 34)
+            button.Position = UDim2.new(1, -180, 0.5, -17)
+            button.BackgroundColor3 = Mey.Theme.Colors.DropdownBg
+            button.Text = value
+            button.TextColor3 = Mey.Theme.Colors.TextDark
+            button.FontFace = Mey.Theme.Fonts.Body
+            button.TextSize = 14
+            button.AutoButtonColor = false
+            button.Parent = frame
+            NewCorner(button, UDim.new(0, 14))
+
+            local stroke = Instance.new("UIStroke")
+            stroke.Color = Mey.Theme.Colors.InputBorder
+            stroke.Thickness = 1.5
+            stroke.Parent = button
+
+            local dropdown = Instance.new("Frame")
+            dropdown.Size = UDim2.new(0, 180, 0, 0)
+            dropdown.Position = UDim2.new(1, -180, 0, 34)
+            dropdown.BackgroundColor3 = Mey.Theme.Colors.DropdownBg
+            dropdown.ClipsDescendants = true
+            dropdown.Visible = false
+            dropdown.Parent = frame
+            NewCorner(dropdown, UDim.new(0, 14))
+
+            local dropdownStroke = Instance.new("UIStroke")
+            dropdownStroke.Color = Mey.Theme.Colors.InputBorder
+            dropdownStroke.Thickness = 1.5
+            dropdownStroke.Parent = dropdown
+
+            local list = Instance.new("UIListLayout")
+            list.Padding = UDim.new(0, 2)
+            list.Parent = dropdown
+
+            local function updateDropdown()
+                for _, child in ipairs(dropdown:GetChildren()) do
+                    if child:IsA("TextButton") then
+                        child:Destroy()
+                    end
+                end
+                local height = 0
+                for _, opt in ipairs(options) do
+                    local optBtn = Instance.new("TextButton")
+                    optBtn.Size = UDim2.new(1, 0, 0, 30)
+                    optBtn.BackgroundTransparency = 1
+                    optBtn.Text = opt
+                    optBtn.TextColor3 = Mey.Theme.Colors.TextDark
+                    optBtn.FontFace = Mey.Theme.Fonts.Body
+                    optBtn.TextSize = 14
+                    optBtn.AutoButtonColor = false
+                    optBtn.Parent = dropdown
+                    optBtn.MouseEnter:Connect(function()
+                        Tween(optBtn, { BackgroundTransparency = 0.85 }, 0.1)
+                    end)
+                    optBtn.MouseLeave:Connect(function()
+                        Tween(optBtn, { BackgroundTransparency = 1 }, 0.1)
+                    end)
+                    optBtn.MouseButton1Click:Connect(function()
+                        value = opt
+                        button.Text = value
+                        if cfg.Callback then cfg.Callback(value) end
+                        dropdown.Visible = false
+                        Tween(dropdown, { Size = UDim2.new(0, 180, 0, 0) }, 0.2)
+                    end)
+                    height = height + 30
+                end
+                dropdown.Size = UDim2.new(0, 180, 0, height)
+            end
+
+            updateDropdown()
+
+            button.MouseButton1Click:Connect(function()
+                if dropdown.Visible then
+                    dropdown.Visible = false
+                    Tween(dropdown, { Size = UDim2.new(0, 180, 0, 0) }, 0.2)
+                else
+                    dropdown.Visible = true
+                    Tween(dropdown, { Size = UDim2.new(0, 180, 0, #options * 30) }, 0.2)
+                end
+            end)
+
+            return {
+                Set = function(v)
+                    if table.find(options, v) then
+                        value = v
+                        button.Text = value
+                        if cfg.Callback then cfg.Callback(value) end
+                    end
+                end,
+                Get = function()
+                    return value
+                end,
+                Refresh = function(newOptions)
+                    options = newOptions
+                    if not table.find(options, value) then
+                        value = options[1] or ""
+                        button.Text = value
+                    end
+                    updateDropdown()
+                end
+            }
+        end
+
+        function page:CreateKeybind(cfg)
+            cfg = cfg or {}
+            local defaultKey = cfg.Default or Enum.KeyCode.None
+            local key = defaultKey
+
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 44)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(0.5, 0, 1, 0)
+            label.Text = cfg.Text or "Keybind"
+            label.TextColor3 = Mey.Theme.Colors.TextDark
+            label.BackgroundTransparency = 1
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = frame
+
+            local bindBtn = Instance.new("TextButton")
+            bindBtn.Size = UDim2.new(0, 120, 0, 34)
+            bindBtn.Position = UDim2.new(1, -120, 0.5, -17)
+            bindBtn.BackgroundColor3 = Mey.Theme.Colors.KeybindBg
+            bindBtn.Text = key == Enum.KeyCode.None and "None" or key.Name
+            bindBtn.TextColor3 = Mey.Theme.Colors.TextDark
+            bindBtn.FontFace = Mey.Theme.Fonts.Body
+            bindBtn.TextSize = 14
+            bindBtn.AutoButtonColor = false
+            bindBtn.Parent = frame
+            NewCorner(bindBtn, UDim.new(0, 14))
+
+            local stroke = Instance.new("UIStroke")
+            stroke.Color = Mey.Theme.Colors.InputBorder
+            stroke.Thickness = 1.5
+            stroke.Parent = bindBtn
+
+            local isListening = false
+            local keyConnection = nil
+
+            bindBtn.MouseButton1Click:Connect(function()
+                if isListening then
+                    isListening = false
+                    if keyConnection then keyConnection:Disconnect() end
+                    bindBtn.Text = key == Enum.KeyCode.None and "None" or key.Name
+                    return
+                end
+                isListening = true
+                bindBtn.Text = "..."
+                keyConnection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                    if gameProcessed then return end
+                    if input.UserInputType == Enum.UserInputType.Keyboard then
+                        key = input.KeyCode
+                        isListening = false
+                        bindBtn.Text = key.Name
+                        if keyConnection then keyConnection:Disconnect() end
+                        if cfg.Callback then cfg.Callback(key) end
+                    end
+                end)
+            end)
+
+            return {
+                Set = function(k)
+                    key = k
+                    bindBtn.Text = key == Enum.KeyCode.None and "None" or key.Name
+                    if cfg.Callback then cfg.Callback(key) end
+                end,
+                Get = function()
+                    return key
+                end,
+            }
+        end
+
+        function page:CreateColorPicker(cfg)
+            cfg = cfg or {}
+            local defaultColor = cfg.Default or Color3.fromRGB(255, 143, 191)
+            local color = defaultColor
+
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 44)
+            frame.BackgroundTransparency = 1
+            frame.Parent = tab.Page
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(0.5, 0, 1, 0)
+            label.Text = cfg.Text or "Color Picker"
+            label.TextColor3 = Mey.Theme.Colors.TextDark
+            label.BackgroundTransparency = 1
+            label.FontFace = Mey.Theme.Fonts.Body
+            label.TextSize = 14
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = frame
+
+            local colorBox = Instance.new("TextButton")
+            colorBox.Size = UDim2.new(0, 80, 0, 34)
+            colorBox.Position = UDim2.new(1, -80, 0.5, -17)
+            colorBox.BackgroundColor3 = color
+            colorBox.Text = ""
+            colorBox.AutoButtonColor = false
+            colorBox.Parent = frame
+            NewCorner(colorBox, UDim.new(0, 14))
+
+            local stroke = Instance.new("UIStroke")
+            stroke.Color = Mey.Theme.Colors.InputBorder
+            stroke.Thickness = 1.5
+            stroke.Parent = colorBox
+
+            local popup = Instance.new("Frame")
+            popup.Size = UDim2.new(0, 200, 0, 0)
+            popup.Position = UDim2.new(1, -200, 0, 34)
+            popup.BackgroundColor3 = Mey.Theme.Colors.ColorPickerBg
+            popup.ClipsDescendants = true
+            popup.Visible = false
+            popup.Parent = frame
+            NewCorner(popup, UDim.new(0, 14))
+
+            local popupStroke = Instance.new("UIStroke")
+            popupStroke.Color = Mey.Theme.Colors.InputBorder
+            popupStroke.Thickness = 1.5
+            popupStroke.Parent = popup
+
+            local grid = Instance.new("Frame")
+            grid.Size = UDim2.new(1, -10, 1, -10)
+            grid.Position = UDim2.new(0, 5, 0, 5)
+            grid.BackgroundTransparency = 1
+            grid.Parent = popup
+
+            local gridLayout = Instance.new("UIGridLayout")
+            gridLayout.CellSize = UDim2.new(0, 30, 0, 30)
+            gridLayout.CellPadding = UDim.new(0, 5)
+            gridLayout.Parent = grid
+
+            local presetColors = {
+                Color3.fromRGB(255, 143, 191),
+                Color3.fromRGB(255, 211, 232),
+                Color3.fromRGB(240, 201, 135),
+                Color3.fromRGB(214, 97, 143),
+                Color3.fromRGB(184, 74, 120),
+                Color3.fromRGB(255, 233, 242),
+                Color3.fromRGB(255, 255, 255),
+                Color3.fromRGB(92, 58, 78),
+                Color3.fromRGB(255, 100, 100),
+                Color3.fromRGB(100, 200, 255),
+                Color3.fromRGB(200, 255, 100),
+                Color3.fromRGB(255, 200, 100),
+            }
+
+            for _, c in ipairs(presetColors) do
+                local btn = Instance.new("TextButton")
+                btn.Size = UDim2.new(0, 30, 0, 30)
+                btn.BackgroundColor3 = c
+                btn.Text = ""
+                btn.AutoButtonColor = false
+                btn.Parent = grid
+                NewCorner(btn, UDim.new(1, 0))
+                btn.MouseButton1Click:Connect(function()
+                    color = c
+                    colorBox.BackgroundColor3 = color
+                    if cfg.Callback then cfg.Callback(color) end
+                    popup.Visible = false
+                    Tween(popup, { Size = UDim2.new(0, 200, 0, 0) }, 0.2)
+                end)
+            end
+
+            colorBox.MouseButton1Click:Connect(function()
+                if popup.Visible then
+                    popup.Visible = false
+                    Tween(popup, { Size = UDim2.new(0, 200, 0, 0) }, 0.2)
+                else
+                    popup.Visible = true
+                    local rowCount = math.ceil(#presetColors / 4)
+                    local height = rowCount * 35 + 10
+                    Tween(popup, { Size = UDim2.new(0, 200, 0, height) }, 0.2)
+                end
+            end)
+
+            return {
+                Set = function(c)
+                    color = c
+                    colorBox.BackgroundColor3 = color
+                    if cfg.Callback then cfg.Callback(color) end
+                end,
+                Get = function()
+                    return color
+                end,
+            }
+        end
+
+        function page:SelectTab(index)
+            if index >= 1 and index <= #window.Tabs then
+                local tab = window.Tabs[index]
+                if tab and tab.Button then
+                    tab.Button:Click()
+                end
+            end
+        end
+
+        return page
+    end
+
+    return window
 end
 
 return Mey
