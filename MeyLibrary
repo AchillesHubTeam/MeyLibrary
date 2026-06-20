@@ -197,6 +197,7 @@ function Mey:CreateWindow(config)
 		Minimized = false,
 		Unloaded = false,
 		Connections = {},
+		_savedPosition = nil,
 	}
 
 	local player = Players.LocalPlayer
@@ -240,6 +241,21 @@ function Mey:CreateWindow(config)
 		CreateCloudIcon(panel, c[1] - 14, c[2] - 8, 0.6 * cloudScale, Mey.Theme.Colors.CloudPinkLight, 0.9)
 	end
 
+	local icon = Instance.new("ImageLabel")
+	icon.Name = "MinimizeIcon"
+	icon.Size = UDim2.new(0, 50, 0, 50)
+	icon.Position = UDim2.new(1, -60, 1, -60)
+	icon.Image = "rbxassetid://105025328866768"
+	icon.BackgroundColor3 = Mey.Theme.Colors.Rose
+	icon.BackgroundTransparency = 0
+	icon.Visible = false
+	icon.Parent = screenGui
+	NewCorner(icon, UDim.new(1, 0))
+	local iconStroke = Instance.new("UIStroke")
+	iconStroke.Color = Mey.Theme.Colors.Gold
+	iconStroke.Thickness = 2
+	iconStroke.Parent = icon
+
 	function window:Destroy()
 		for _, conn in ipairs(window.Connections) do
 			conn:Disconnect()
@@ -272,6 +288,34 @@ function Mey:CreateWindow(config)
 			if input == dragInput and dragging then
 				local delta = input.Position - dragStart
 				panel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+			end
+		end)
+	)
+
+	local iconDragging, iconDragInput, iconDragStart, iconStartPos
+	icon.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			iconDragging = true
+			iconDragStart = input.Position
+			iconStartPos = icon.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					iconDragging = false
+				end
+			end)
+		end
+	end)
+	icon.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			iconDragInput = input
+		end
+	end)
+	table.insert(
+		window.Connections,
+		UserInputService.InputChanged:Connect(function(input)
+			if input == iconDragInput and iconDragging then
+				local delta = input.Position - iconDragStart
+				icon.Position = UDim2.new(iconStartPos.X.Scale, iconStartPos.X.Offset + delta.X, iconStartPos.Y.Scale, iconStartPos.Y.Offset + delta.Y)
 			end
 		end)
 	)
@@ -342,11 +386,29 @@ function Mey:CreateWindow(config)
 	CreateControl("−", 0, Mey.Theme.Colors.Gold, function()
 		window.Minimized = not window.Minimized
 		if window.Minimized then
-			Tween(panel, { Size = UDim2.new(0, scaledSize.X.Offset, 0, 70) }, 0.3)
+			window._savedPosition = panel.Position
+			panel.Visible = false
+			icon.Visible = true
+			icon.Position = UDim2.new(1, -60, 1, -60)
 		else
-			Tween(panel, { Size = scaledSize }, 0.3)
+			icon.Visible = false
+			panel.Visible = true
+			if window._savedPosition then
+				panel.Position = window._savedPosition
+			end
 		end
 	end, "Minimize")
+
+	icon.MouseButton1Click:Connect(function()
+		if window.Minimized then
+			window.Minimized = false
+			icon.Visible = false
+			panel.Visible = true
+			if window._savedPosition then
+				panel.Position = window._savedPosition
+			end
+		end
+	end)
 
 	local sidebar = Instance.new("Frame")
 	sidebar.Name = "Sidebar"
